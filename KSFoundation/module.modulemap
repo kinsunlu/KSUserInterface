@@ -1,0 +1,6 @@
+framework module KSFoundation {
+  umbrella header "KSFoundation.h"
+
+  export *
+  module * { export * }
+}

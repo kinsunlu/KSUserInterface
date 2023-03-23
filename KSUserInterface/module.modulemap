@@ -1,0 +1,6 @@
+framework module KSUserInterface {
+  umbrella header "KSUserInterface.h"
+
+  export *
+  module * { export * }
+}

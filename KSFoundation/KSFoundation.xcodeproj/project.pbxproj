@@ -1,0 +1,462 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6D3D2A1928A0E7E50044D986 /* KSFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A1828A0E7E50044D986 /* KSFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A3A28A0E9DC0044D986 /* KSArchiveTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A2028A0E9DB0044D986 /* KSArchiveTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A3B28A0E9DC0044D986 /* KSArchiveTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A2128A0E9DB0044D986 /* KSArchiveTools.m */; };
+		6D3D2A3C28A0E9DC0044D986 /* KSKeyChainTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A2328A0E9DC0044D986 /* KSKeyChainTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A3D28A0E9DC0044D986 /* _KSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A2428A0E9DC0044D986 /* _KSReachability.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		6D3D2A3E28A0E9DC0044D986 /* KSDeviceInfomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A2528A0E9DC0044D986 /* KSDeviceInfomation.m */; };
+		6D3D2A3F28A0E9DC0044D986 /* KSDeviceTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A2628A0E9DC0044D986 /* KSDeviceTools.m */; };
+		6D3D2A4028A0E9DC0044D986 /* _KSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A2728A0E9DC0044D986 /* _KSReachability.m */; };
+		6D3D2A4128A0E9DC0044D986 /* KSKeyChainTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A2828A0E9DC0044D986 /* KSKeyChainTool.m */; };
+		6D3D2A4228A0E9DC0044D986 /* KSDeviceInfomation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A2928A0E9DC0044D986 /* KSDeviceInfomation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A4328A0E9DC0044D986 /* KSDeviceTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A2A28A0E9DC0044D986 /* KSDeviceTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A4428A0E9DC0044D986 /* KSBaseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A2C28A0E9DC0044D986 /* KSBaseModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A4628A0E9DC0044D986 /* KSBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A2E28A0E9DC0044D986 /* KSBaseModel.m */; };
+		6D3D2A4828A0E9DC0044D986 /* KSModelsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A3028A0E9DC0044D986 /* KSModelsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A4928A0E9DC0044D986 /* KSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A3228A0E9DC0044D986 /* KSNetworking.m */; };
+		6D3D2A4A28A0E9DC0044D986 /* KSResponseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A3328A0E9DC0044D986 /* KSResponseModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A4B28A0E9DC0044D986 /* KSRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A3428A0E9DC0044D986 /* KSRequestModel.m */; };
+		6D3D2A4C28A0E9DC0044D986 /* KSURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A3528A0E9DC0044D986 /* KSURLRequest.m */; };
+		6D3D2A4D28A0E9DC0044D986 /* KSNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A3628A0E9DC0044D986 /* KSNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A4E28A0E9DC0044D986 /* KSResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2A3728A0E9DC0044D986 /* KSResponseModel.m */; };
+		6D3D2A4F28A0E9DC0044D986 /* KSURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A3828A0E9DC0044D986 /* KSURLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2A5028A0E9DC0044D986 /* KSRequestModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2A3928A0E9DC0044D986 /* KSRequestModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2C7828A1FB1D0044D986 /* KSWeakObjectPuppet.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D3D2C7628A1FB1D0044D986 /* KSWeakObjectPuppet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D3D2C7928A1FB1D0044D986 /* KSWeakObjectPuppet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D2C7728A1FB1D0044D986 /* KSWeakObjectPuppet.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6D3D2A1528A0E7E50044D986 /* KSFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KSFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D3D2A1828A0E7E50044D986 /* KSFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSFoundation.h; sourceTree = "<group>"; };
+		6D3D2A2028A0E9DB0044D986 /* KSArchiveTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSArchiveTools.h; sourceTree = "<group>"; };
+		6D3D2A2128A0E9DB0044D986 /* KSArchiveTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSArchiveTools.m; sourceTree = "<group>"; };
+		6D3D2A2328A0E9DC0044D986 /* KSKeyChainTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyChainTool.h; sourceTree = "<group>"; };
+		6D3D2A2428A0E9DC0044D986 /* _KSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _KSReachability.h; sourceTree = "<group>"; };
+		6D3D2A2528A0E9DC0044D986 /* KSDeviceInfomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDeviceInfomation.m; sourceTree = "<group>"; };
+		6D3D2A2628A0E9DC0044D986 /* KSDeviceTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDeviceTools.m; sourceTree = "<group>"; };
+		6D3D2A2728A0E9DC0044D986 /* _KSReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _KSReachability.m; sourceTree = "<group>"; };
+		6D3D2A2828A0E9DC0044D986 /* KSKeyChainTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSKeyChainTool.m; sourceTree = "<group>"; };
+		6D3D2A2928A0E9DC0044D986 /* KSDeviceInfomation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDeviceInfomation.h; sourceTree = "<group>"; };
+		6D3D2A2A28A0E9DC0044D986 /* KSDeviceTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDeviceTools.h; sourceTree = "<group>"; };
+		6D3D2A2C28A0E9DC0044D986 /* KSBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSBaseModel.h; sourceTree = "<group>"; };
+		6D3D2A2E28A0E9DC0044D986 /* KSBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSBaseModel.m; sourceTree = "<group>"; };
+		6D3D2A3028A0E9DC0044D986 /* KSModelsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSModelsProtocol.h; sourceTree = "<group>"; };
+		6D3D2A3228A0E9DC0044D986 /* KSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSNetworking.m; sourceTree = "<group>"; };
+		6D3D2A3328A0E9DC0044D986 /* KSResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSResponseModel.h; sourceTree = "<group>"; };
+		6D3D2A3428A0E9DC0044D986 /* KSRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSRequestModel.m; sourceTree = "<group>"; };
+		6D3D2A3528A0E9DC0044D986 /* KSURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLRequest.m; sourceTree = "<group>"; };
+		6D3D2A3628A0E9DC0044D986 /* KSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSNetworking.h; sourceTree = "<group>"; };
+		6D3D2A3728A0E9DC0044D986 /* KSResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSResponseModel.m; sourceTree = "<group>"; };
+		6D3D2A3828A0E9DC0044D986 /* KSURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLRequest.h; sourceTree = "<group>"; };
+		6D3D2A3928A0E9DC0044D986 /* KSRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSRequestModel.h; sourceTree = "<group>"; };
+		6D3D2C7628A1FB1D0044D986 /* KSWeakObjectPuppet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSWeakObjectPuppet.h; sourceTree = "<group>"; };
+		6D3D2C7728A1FB1D0044D986 /* KSWeakObjectPuppet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KSWeakObjectPuppet.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6D3D2A1228A0E7E50044D986 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6D3D2A0B28A0E7E50044D986 = {
+			isa = PBXGroup;
+			children = (
+				6D3D2A1728A0E7E50044D986 /* KSFoundation */,
+				6D3D2A1628A0E7E50044D986 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6D3D2A1628A0E7E50044D986 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6D3D2A1528A0E7E50044D986 /* KSFoundation.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6D3D2A1728A0E7E50044D986 /* KSFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				6D3D2A1F28A0E9DB0044D986 /* ArchiveTools */,
+				6D3D2A2228A0E9DC0044D986 /* Device */,
+				6D3D2A1828A0E7E50044D986 /* KSFoundation.h */,
+				6D3D2A2B28A0E9DC0044D986 /* Misc */,
+				6D3D2A3128A0E9DC0044D986 /* Networking */,
+			);
+			path = KSFoundation;
+			sourceTree = "<group>";
+		};
+		6D3D2A1F28A0E9DB0044D986 /* ArchiveTools */ = {
+			isa = PBXGroup;
+			children = (
+				6D3D2A2028A0E9DB0044D986 /* KSArchiveTools.h */,
+				6D3D2A2128A0E9DB0044D986 /* KSArchiveTools.m */,
+			);
+			path = ArchiveTools;
+			sourceTree = "<group>";
+		};
+		6D3D2A2228A0E9DC0044D986 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				6D3D2A2428A0E9DC0044D986 /* _KSReachability.h */,
+				6D3D2A2728A0E9DC0044D986 /* _KSReachability.m */,
+				6D3D2A2928A0E9DC0044D986 /* KSDeviceInfomation.h */,
+				6D3D2A2528A0E9DC0044D986 /* KSDeviceInfomation.m */,
+				6D3D2A2A28A0E9DC0044D986 /* KSDeviceTools.h */,
+				6D3D2A2628A0E9DC0044D986 /* KSDeviceTools.m */,
+				6D3D2A2328A0E9DC0044D986 /* KSKeyChainTool.h */,
+				6D3D2A2828A0E9DC0044D986 /* KSKeyChainTool.m */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		6D3D2A2B28A0E9DC0044D986 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				6D3D2A2C28A0E9DC0044D986 /* KSBaseModel.h */,
+				6D3D2A2E28A0E9DC0044D986 /* KSBaseModel.m */,
+				6D3D2A3028A0E9DC0044D986 /* KSModelsProtocol.h */,
+				6D3D2C7628A1FB1D0044D986 /* KSWeakObjectPuppet.h */,
+				6D3D2C7728A1FB1D0044D986 /* KSWeakObjectPuppet.m */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		6D3D2A3128A0E9DC0044D986 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				6D3D2A3628A0E9DC0044D986 /* KSNetworking.h */,
+				6D3D2A3228A0E9DC0044D986 /* KSNetworking.m */,
+				6D3D2A3928A0E9DC0044D986 /* KSRequestModel.h */,
+				6D3D2A3428A0E9DC0044D986 /* KSRequestModel.m */,
+				6D3D2A3328A0E9DC0044D986 /* KSResponseModel.h */,
+				6D3D2A3728A0E9DC0044D986 /* KSResponseModel.m */,
+				6D3D2A3828A0E9DC0044D986 /* KSURLRequest.h */,
+				6D3D2A3528A0E9DC0044D986 /* KSURLRequest.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6D3D2A1028A0E7E50044D986 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D3D2A4A28A0E9DC0044D986 /* KSResponseModel.h in Headers */,
+				6D3D2A4F28A0E9DC0044D986 /* KSURLRequest.h in Headers */,
+				6D3D2A1928A0E7E50044D986 /* KSFoundation.h in Headers */,
+				6D3D2A3A28A0E9DC0044D986 /* KSArchiveTools.h in Headers */,
+				6D3D2A5028A0E9DC0044D986 /* KSRequestModel.h in Headers */,
+				6D3D2A4828A0E9DC0044D986 /* KSModelsProtocol.h in Headers */,
+				6D3D2A4D28A0E9DC0044D986 /* KSNetworking.h in Headers */,
+				6D3D2A3C28A0E9DC0044D986 /* KSKeyChainTool.h in Headers */,
+				6D3D2A4328A0E9DC0044D986 /* KSDeviceTools.h in Headers */,
+				6D3D2A4228A0E9DC0044D986 /* KSDeviceInfomation.h in Headers */,
+				6D3D2A4428A0E9DC0044D986 /* KSBaseModel.h in Headers */,
+				6D3D2C7828A1FB1D0044D986 /* KSWeakObjectPuppet.h in Headers */,
+				6D3D2A3D28A0E9DC0044D986 /* _KSReachability.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6D3D2A1428A0E7E50044D986 /* KSFoundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D3D2A1C28A0E7E50044D986 /* Build configuration list for PBXNativeTarget "KSFoundation" */;
+			buildPhases = (
+				6D3D2A1028A0E7E50044D986 /* Headers */,
+				6D3D2A1128A0E7E50044D986 /* Sources */,
+				6D3D2A1228A0E7E50044D986 /* Frameworks */,
+				6D3D2A1328A0E7E50044D986 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KSFoundation;
+			productName = KSFoundation;
+			productReference = 6D3D2A1528A0E7E50044D986 /* KSFoundation.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6D3D2A0C28A0E7E50044D986 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					6D3D2A1428A0E7E50044D986 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 6D3D2A0F28A0E7E50044D986 /* Build configuration list for PBXProject "KSFoundation" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6D3D2A0B28A0E7E50044D986;
+			productRefGroup = 6D3D2A1628A0E7E50044D986 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6D3D2A1428A0E7E50044D986 /* KSFoundation */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6D3D2A1328A0E7E50044D986 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6D3D2A1128A0E7E50044D986 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D3D2A3B28A0E9DC0044D986 /* KSArchiveTools.m in Sources */,
+				6D3D2A4128A0E9DC0044D986 /* KSKeyChainTool.m in Sources */,
+				6D3D2A4C28A0E9DC0044D986 /* KSURLRequest.m in Sources */,
+				6D3D2A4628A0E9DC0044D986 /* KSBaseModel.m in Sources */,
+				6D3D2A4B28A0E9DC0044D986 /* KSRequestModel.m in Sources */,
+				6D3D2A3F28A0E9DC0044D986 /* KSDeviceTools.m in Sources */,
+				6D3D2A4028A0E9DC0044D986 /* _KSReachability.m in Sources */,
+				6D3D2A3E28A0E9DC0044D986 /* KSDeviceInfomation.m in Sources */,
+				6D3D2A4E28A0E9DC0044D986 /* KSResponseModel.m in Sources */,
+				6D3D2A4928A0E9DC0044D986 /* KSNetworking.m in Sources */,
+				6D3D2C7928A1FB1D0044D986 /* KSWeakObjectPuppet.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6D3D2A1A28A0E7E50044D986 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6D3D2A1B28A0E7E50044D986 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6D3D2A1D28A0E7E50044D986 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = X65NBTHB6P;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kinsun.foundation;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6D3D2A1E28A0E7E50044D986 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = X65NBTHB6P;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kinsun.foundation;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6D3D2A0F28A0E7E50044D986 /* Build configuration list for PBXProject "KSFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D3D2A1A28A0E7E50044D986 /* Debug */,
+				6D3D2A1B28A0E7E50044D986 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D3D2A1C28A0E7E50044D986 /* Build configuration list for PBXNativeTarget "KSFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D3D2A1D28A0E7E50044D986 /* Debug */,
+				6D3D2A1E28A0E7E50044D986 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6D3D2A0C28A0E7E50044D986 /* Project object */;
+}
