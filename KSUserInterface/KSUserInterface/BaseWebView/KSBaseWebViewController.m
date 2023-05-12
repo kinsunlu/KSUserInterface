@@ -13,7 +13,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"加载中...";
+    self.title = @"...";
 }
 
 - (void)loadView {
@@ -102,6 +102,7 @@ NSString * const _k_CanGoBack = @"canGoBack";
     if (object == view) {
         if (keyPath == _k_CanGoBack) {
             _closeButton.hidden = !view.canGoBack;
+            [self.view.navigationView setNeedsLayout];
         }
     }
 }

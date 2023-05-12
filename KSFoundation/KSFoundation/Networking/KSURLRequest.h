@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, KSURLRequestMethod) {
 typedef NS_ENUM(NSInteger, KSURLRequestContentType) {
     KSURLRequestContentTypeJSON             = 0, /// Content-Type =  application/json;
     KSURLRequestContentTypeFormUrlencoded   = 1, /// Content-Type = application/x-www-form-urlencoded
-    KSURLRequestContentTypeTextPlain        = 2 /// Content-Type = text/plain
+    KSURLRequestContentTypeTextPlain        = 2, /// Content-Type = text/plain
+    KSURLRequestContentTypeEventStream      = 3 /// Content-Type = text/event-stream; charset=utf-8
 } NS_SWIFT_NAME(KSURLRequest.ContentType);
 
 NS_ASSUME_NONNULL_BEGIN

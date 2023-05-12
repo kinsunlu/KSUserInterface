@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当前是否有键盘在屏幕中
 @property (nonatomic, assign, getter=isKeyBoradShowed, readonly) BOOL keyBoradShowed;
 
+- (void)followKeyboardWithHeight:(CGFloat)height duration:(NSTimeInterval)duration;
+
 /// 点击半透明背景会执行此方法
 - (void)didClickBackgroundView;
 

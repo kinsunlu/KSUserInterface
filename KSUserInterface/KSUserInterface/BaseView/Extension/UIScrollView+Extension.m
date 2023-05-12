@@ -222,7 +222,8 @@ static const char ___ks__topMarginString = '\0';
 
 - (KSLoadingView *)loadLoadingView {
     KSLoadingView *view = KSLoadingView.alloc.init;
-    [view setTitle:@"加载失败" forStatus:KSLoadingViewStatusLoadFailure];
+    view.backgroundColor = UIColor.clearColor;
+    [view setTitle:[NSBundle.mainBundle localizedStringForKey:@"LOADING_VIEW_SERVER_FAIL" value:nil table: nil] forStatus:KSLoadingViewStatusLoadFailure];
     return view;
 }
 

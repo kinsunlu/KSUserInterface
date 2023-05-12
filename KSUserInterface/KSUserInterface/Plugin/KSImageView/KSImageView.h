@@ -23,7 +23,9 @@ typedef void (^KSImageViewCallback)(__kindof KSImageView *, UIImage *_Nullable, 
 
 /// 当=YES时，可以丢弃那些没有显示在屏幕中的图像加载任务，从而达到节省资源。
 /// 建议在tableView上Cell的imageView开启，默认=NO
-@property (nonatomic, assign, getter=isTailOfQueue) BOOL tailOfQueue;
+@property (nonatomic, assign, getter=isDeferredTask) BOOL deferredTask;
+
+@property (nonatomic, assign) UIImageRenderingMode renderingMode;
 
 - (void)setImageURL:(NSURL *)url placeholder:(UIImage * _Nullable)placeholder finished:(_Nullable KSImageViewCallback)finished;
 

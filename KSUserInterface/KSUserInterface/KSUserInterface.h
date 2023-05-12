@@ -93,7 +93,6 @@ FOUNDATION_EXPORT const unsigned char KSUserInterfaceVersionString[];
 
 #if __has_include(<KSUserInterface/KSSegmentedControl.h>)
 #import <KSUserInterface/KSSegmentedControl.h>
-#import <KSUserInterface/KSPageSlideSegmented.h>
 #endif
 
 #if __has_include(<KSUserInterface/KSVideoLayer.h>)

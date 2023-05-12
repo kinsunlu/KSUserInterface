@@ -14,16 +14,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) NSArray <NSString *> *items;
 @property (nonatomic, assign) CGFloat egdeMargin;
-@property (nonatomic, strong) UIFont *font;
+
+@property (nonatomic, strong, readonly) UIFont *normalFont;
+@property (nonatomic, strong, readonly) UIFont *selectedFont;
+- (void)setNormalFont:(UIFont *)normalFont selectedFont:(UIFont *_Nullable)selectedFont;
+
 @property (nonatomic, strong) UIColor *normalTextColor;
 @property (nonatomic, strong) UIColor *selectedTextColor;
 @property (nonatomic, assign) NSUInteger selectedSegmentIndex;
 @property (nonatomic, copy, nullable) void (^didClickItem)(KSSegmentedControl *segmentedControl, NSUInteger index);
 
 @property (nonatomic, assign, getter=isShowIndicator) BOOL showIndicator;
-@property (nonatomic, assign) CGFloat indicatorHeight;
-@property (nonatomic, assign) CGFloat indicatorBottomEgdeInset;
 @property (nonatomic, strong) UIColor *indndicatorColor;
+@property (nonatomic, assign) CGFloat indicatorHeight;
+@property (nonatomic, assign) CGFloat indicatorBottomMargin;
 
 - (instancetype)initWithFrame:(CGRect)frame items:(NSArray <NSString *> *)items;
 - (void)updateIndicatorProportion:(CGFloat)proportion;

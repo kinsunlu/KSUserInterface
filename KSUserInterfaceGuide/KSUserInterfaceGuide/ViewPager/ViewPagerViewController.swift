@@ -39,6 +39,7 @@ open class ViewPagerViewController: KSSecondaryViewControllerDefault, KSViewPage
         header.segmentedControl.didClickItem = { [weak self] in
             self?._viewPager.setCurrentPage($1, animated: true)
         }
+        /// ⚠️ 尝试一下其他模式吧，会发现不一样的东西。
         let viewPager = KSViewPager(scrollViews: [_videoListView, _scrollView], mode: .viewHeight)
         viewPager.headerTabHeight = 36.0
         viewPager.headerView = header
@@ -222,7 +223,7 @@ extension ViewPagerViewController {
             imageView.backgroundColor = .ks_white
             imageView.clipsToBounds = true
             imageView.contentMode = .scaleAspectFill
-            imageView.isTailOfQueue = true
+            imageView.isDeferredTask = true
             return imageView
         }()
         
@@ -468,7 +469,7 @@ extension ViewPagerViewController._Header {
         
         public let segmentedControl: KSSegmentedControl = {
             let seg = KSSegmentedControl(frame: .zero, items: ["作品 637", "活动"])
-            seg.font = .systemFont(ofSize: 15.0)
+            seg.setNormalFont(.systemFont(ofSize: 15.0), selectedFont: nil)
             seg.indicatorHeight = 2.0
             seg.indndicatorColor = UIColor(hex: 0xFACE15)
             seg.normalTextColor = UIColor(hex: 0x8B8C91)

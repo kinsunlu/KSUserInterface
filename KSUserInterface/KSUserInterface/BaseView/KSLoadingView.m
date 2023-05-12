@@ -17,12 +17,14 @@
 
 @implementation KSLoadingView {
     NSMapTable <NSNumber *, NSString *>*_titles;
+    NSMapTable <NSNumber *, UIColor *>*_titleColors;
     NSMapTable <NSNumber *, id>*_images;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _titles = NSMapTable.strongToStrongObjectsMapTable;
+        _titleColors = NSMapTable.strongToStrongObjectsMapTable;
         _images = NSMapTable.strongToStrongObjectsMapTable;
         self.backgroundColor = UIColor.ks_background;
         
@@ -80,6 +82,7 @@
             _imageView.image = [self imageForStatus:status];
             _imageView.hidden = NO;
         }
+        _titleLabel.textColor = [self titleColorForStatus:status];
         _titleLabel.text = [self titleForStatus:status];
         [self setNeedsLayout];
     }
@@ -99,6 +102,22 @@
 
 - (NSString *)titleForStatus:(KSLoadingViewStatus)status {
     return [_titles objectForKey:[NSNumber numberWithInteger:status]];
+}
+
+- (void)setTitleColor:(UIColor *)titleColor forStatus:(KSLoadingViewStatus)status {
+    NSNumber *key = [NSNumber numberWithInteger:status];
+    if (titleColor == nil) {
+        [_titleColors removeObjectForKey:key];
+    } else {
+        [_titleColors setObject:titleColor forKey:key];
+    }
+    if (_status == status) {
+        _titleLabel.textColor = titleColor;
+    }
+}
+
+- (UIColor *)titleColorForStatus:(KSLoadingViewStatus)status {
+    return [_titleColors objectForKey:[NSNumber numberWithInteger:status]];
 }
 
 - (void)setImage:(UIImage *)image forStatus:(KSLoadingViewStatus)status {

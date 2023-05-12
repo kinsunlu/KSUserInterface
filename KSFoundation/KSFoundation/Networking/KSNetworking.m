@@ -12,6 +12,7 @@ typedef void(^_KSNetworkingCallbackBlock)(id, NSError *);
 
 @interface _KSNetworkingModel <__covariant DataType> : NSObject
 
+@property (nonatomic, assign, getter=isStream) BOOL stream;
 @property (nonatomic, copy, readonly) _KSNetworkingCallbackBlock callback;
 @property (nonatomic, strong) DataType data;
 
@@ -136,7 +137,9 @@ typedef void(^_KSNetworkingCallbackBlock)(id, NSError *);
     _KSNetworkingModel<NSMutableData *> *model = [_taskPool objectForKey:dataTask];
     [_taskPoolLock unlock];
     if (model != nil && model.callback != nil) {
-        model.data = NSMutableData.data;
+        if (!model.isStream) {
+            model.data = NSMutableData.data;
+        }
         completionHandler(NSURLSessionResponseAllow);
     } else {
         completionHandler(NSURLSessionResponseCancel);
@@ -147,8 +150,12 @@ typedef void(^_KSNetworkingCallbackBlock)(id, NSError *);
     [_taskPoolLock lock];
     _KSNetworkingModel<NSMutableData *> *model = [_taskPool objectForKey:dataTask];
     [_taskPoolLock unlock];
-    if (model != nil && model.data != nil) {
-        [model.data appendData:data];
+    if (model != nil) {
+        if (model.isStream) {
+            model.callback(data, nil);
+        } else if (model.data != nil) {
+            [model.data appendData:data];
+        }
     }
 }
 
@@ -180,7 +187,10 @@ typedef void(^_KSNetworkingCallbackBlock)(id, NSError *);
             }
         }
         if ([task isKindOfClass:NSURLSessionDataTask.class]) {
-            model.callback(model.data, error);
+            model.callback(model.isStream ? [@"status: isEnd" dataUsingEncoding:NSUTF8StringEncoding] : model.data, error);
+            [_taskPoolLock lock];
+            [_taskPool removeObjectForKey:task];
+            [_taskPoolLock unlock];
         } else if ([task isKindOfClass:NSURLSessionDownloadTask.class]) {
             if (error != nil) {
                 if (pthread_main_np() != 0) {
@@ -237,6 +247,7 @@ typedef void(^_KSNetworkingCallbackBlock)(id, NSError *);
         }];
     }
     _KSNetworkingModel<NSMutableData *> *model = [_KSNetworkingModel.alloc initWithCallback:callback];
+    model.stream = request.contentType == KSURLRequestContentTypeEventStream;
     NSURLSessionDataTask *task = [_session dataTaskWithRequest:request];
     [_taskPoolLock lock];
     [_taskPool setObject:model forKey:task];

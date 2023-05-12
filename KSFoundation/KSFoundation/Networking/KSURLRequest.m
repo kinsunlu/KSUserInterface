@@ -53,6 +53,10 @@
                     [self setValue:@"utf-8" forHTTPHeaderField:@"Accept-Encoding"];
                     [self setValue:@"text/plain" forHTTPHeaderField:@"Content-Type"];
                     break;
+                case KSURLRequestContentTypeEventStream:
+                    [self setValue:@"utf-8" forHTTPHeaderField:@"Accept-Encoding"];
+                    [self setValue:@"text/event-stream; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+                    break;
                 default:
                     break;
             }
@@ -66,7 +70,8 @@
     NSData *body = nil;
     if (params != nil && params.count > 0) {
         switch (contentType) {
-            case KSURLRequestContentTypeJSON: {
+            case KSURLRequestContentTypeJSON:
+            case KSURLRequestContentTypeEventStream: {
                 NSJSONWritingOptions options = 0;
                 if (@available(iOS 11.0, *)) options = NSJSONWritingSortedKeys;
                 body = [NSJSONSerialization dataWithJSONObject:params options:options error:nil];

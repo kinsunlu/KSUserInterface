@@ -35,12 +35,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) KSLoadingViewStatus status;
 
 - (void)setTitle:(NSString *_Nullable)title forStatus:(KSLoadingViewStatus)status UI_APPEARANCE_SELECTOR;
-
 - (NSString *_Nullable)titleForStatus:(KSLoadingViewStatus)status;
 
-- (void)setImage:(UIImage *_Nullable)image forStatus:(KSLoadingViewStatus)status UI_APPEARANCE_SELECTOR;
+- (void)setTitleColor:(UIColor *_Nullable)titleColor forStatus:(KSLoadingViewStatus)status UI_APPEARANCE_SELECTOR;
+- (UIColor *_Nullable)titleColorForStatus:(KSLoadingViewStatus)status;
 
+- (void)setImage:(UIImage *_Nullable)image forStatus:(KSLoadingViewStatus)status UI_APPEARANCE_SELECTOR;
 - (UIImage *_Nullable)imageForStatus:(KSLoadingViewStatus)status;
+
 
 /// 默认 = KSLoadingAnimationNormalView.class
 @property (nonatomic, class) Class animationViewClass;

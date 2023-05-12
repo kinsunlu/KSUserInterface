@@ -228,17 +228,24 @@ static NSString * const k_KSViewPagerKeyPathContentOffset = @"contentOffset";
     return _headerContentView.contentView;
 }
 
-- (BOOL)_updateCurrentPage:(NSUInteger)currentPage {
-    BOOL isValid = [self _validIndex:currentPage];
-    if (isValid) {
+- (void)_updateCurrentPage:(NSUInteger)currentPage {
+    if ([self _validIndex:currentPage]) {
         _currentPage = currentPage;
         _currentScrollView = [_scrollViews objectAtIndex:currentPage];
         _headerContentView.scrollView = _currentScrollView;
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (ino64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf __updateCurrentPage:currentPage];
+        });
+    }
+}
+
+- (void)__updateCurrentPage:(NSUInteger)currentPage {
+    if (_currentPage == currentPage) {
         if (_delegate != nil && [_delegate respondsToSelector:@selector(viewPager:currentPageDidChange:)]) {
             [_delegate viewPager:self currentPageDidChange:currentPage];
         }
     }
-    return isValid;
 }
 
 - (BOOL)_validIndex:(NSUInteger)page {

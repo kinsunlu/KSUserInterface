@@ -10,6 +10,10 @@
 
 @interface _KSSCItemLayer : CATextLayer
 
+@property (nonatomic, assign) CGFloat normalFontSize;
+@property (nonatomic, assign) CGFloat selectedFontSize;
+@property (nonatomic, assign) CGFontRef normalFont;
+@property (nonatomic, assign) CGFontRef selectedFont;
 @property (nonatomic, assign) CGColorRef normalColor;
 @property (nonatomic, assign) CGColorRef selectedColor;
 @property (nonatomic, assign, getter=isSelected) BOOL selected;
@@ -36,9 +40,37 @@
     if (_selected) self.foregroundColor = selectedColor;
 }
 
+- (void)setNormalFont:(CGFontRef)normalFont {
+    _normalFont = normalFont;
+    if (!_selected) self.font = normalFont;
+}
+
+- (void)setSelectedFont:(CGFontRef)selectedFont {
+    _selectedFont = selectedFont;
+    if (_selected) self.font = selectedFont;
+}
+
+- (void)setNormalFontSize:(CGFloat)normalFontSize {
+    _normalFontSize = normalFontSize;
+    if (!_selected) self.fontSize = normalFontSize;
+}
+
+- (void)setSelectedFontSize:(CGFloat)selectedFontSize {
+    _selectedFontSize = selectedFontSize;
+    if (_selected) self.fontSize = selectedFontSize;
+}
+
 - (void)setSelected:(BOOL)selected {
     _selected = selected;
-    self.foregroundColor = selected ? _selectedColor : _normalColor;
+    if (selected) {
+        self.foregroundColor = _selectedColor;
+        self.fontSize = _selectedFontSize;
+        self.font = _selectedFont;
+    } else {
+        self.foregroundColor = _normalColor;
+        self.fontSize = _normalFontSize;
+        self.font = _normalFont;
+    }
 }
 
 @end
@@ -79,7 +111,7 @@
         _textLayerArray = textLayerArray;
         
         [self _forceUpdateSelectedSegmentIndex:0];
-        self.font = [UIFont systemFontOfSize:18.0];
+        [self setNormalFont:[UIFont systemFontOfSize:18.0] selectedFont:[UIFont boldSystemFontOfSize:20.0]];
         self.normalTextColor = UIColor.ks_lightTitle;
         self.selectedTextColor = UIColor.ks_title;
     }
@@ -101,7 +133,7 @@
     }
     CGFloat margin = floor((remainderWidth-_egdeMargin*2.0)/count);
     CGFloat viewX = _egdeMargin+margin*0.5;
-    CGFloat viewH = _font.lineHeight;
+    CGFloat viewH = _normalFont.lineHeight;
     CGFloat viewY = (windowHeight-viewH)*0.5;
     for (NSInteger i = 0; i < count; i++) {
         NSNumber *value = [_itemsWidthArray objectAtIndex:i];
@@ -116,7 +148,7 @@
         _KSSCItemLayer *textLayer = [_textLayerArray pointerAtIndex:_selectedSegmentIndex];
         CGRect frame = textLayer.frame;
         frame.size.height = _indicatorHeight;
-        frame.origin.y = windowHeight-_indicatorBottomEgdeInset-_indicatorHeight;
+        frame.origin.y = windowHeight-_indicatorBottomMargin-_indicatorHeight;
         _indLayer.frame = frame;
     }
 }
@@ -169,18 +201,20 @@
     }
 }
 
-- (void)setFont:(UIFont *)font {
-    if (font == nil) return;
-    _font = font;
+- (void)setNormalFont:(UIFont *)normalFont selectedFont:(UIFont *)selectedFont {
+    if (normalFont == nil) return;
+    _normalFont = normalFont;
+    _selectedFont = selectedFont ?: normalFont.copy;
     
     NSUInteger count = _textLayerArray.count;
-    CGFloat pointSize = font.pointSize;
-    CFStringRef fontCFString = (__bridge CFStringRef)font.fontName;
-    CGFontRef fontRef = CGFontCreateWithFontName(fontCFString);
+    CGFloat normalFontSize = _normalFont.pointSize;
+    CGFontRef normalFontRef = CGFontCreateWithFontName((__bridge CFStringRef)_normalFont.fontName);
+    CGFloat selectedFontSize = _selectedFont.pointSize;
+    CGFontRef selectedFontRef = CGFontCreateWithFontName((__bridge CFStringRef)_selectedFont.fontName);
     
     CGSize maxSize = (CGSize){MAXFLOAT, MAXFLOAT};
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-    NSDictionary <NSAttributedStringKey, UIFont *> *attributes = @{NSFontAttributeName: font};
+    NSDictionary <NSAttributedStringKey, UIFont *> *attributes = @{NSFontAttributeName: _selectedFont};
     NSMutableArray <NSNumber *> *itemsWidthArray = [NSMutableArray arrayWithCapacity:count];
     
     _totalWidth = 0.0;
@@ -195,10 +229,12 @@
         _maxHeight = MAX(size.height, _maxHeight);
         
         _KSSCItemLayer *textLayer = [_textLayerArray pointerAtIndex:i];
-        textLayer.font = fontRef;
-        textLayer.fontSize = pointSize;
+        textLayer.font = normalFontRef;
+        textLayer.normalFontSize = normalFontSize;
+        textLayer.normalFont = normalFontRef;
+        textLayer.selectedFontSize = selectedFontSize;
+        textLayer.selectedFont = selectedFontRef;
     }
-    CGFontRelease(fontRef);
     _itemsWidthArray = itemsWidthArray;
 }
 

@@ -21,7 +21,8 @@
     if (self = [super initWithFrame:frame]) {
         self.font = [UIFont boldSystemFontOfSize:18.0];
         self.textAlignment = NSTextAlignmentCenter;
-        self.lineBreakMode = NSLineBreakByTruncatingMiddle;
+//        self.lineBreakMode = NSLineBreakByTruncatingMiddle;
+        self.adjustsFontSizeToFitWidth = YES;
     }
     return self;
 }
@@ -131,8 +132,9 @@
     CGFloat viewH = maxH;
     CGFloat viewX = 0.0;
     CGFloat viewW = 0.0;
-    CGFloat lastX = 0.0;
+    CGFloat lastX = 15.0;
     for (UIView *view in _leftViews) {
+        if (view.isHidden || view.alpha <= 0.0) continue;
         CGSize size = [view sizeThatFits:windowSize];
         if (CGSizeEqualToSize(size, CGSizeZero)) {
             size = view.bounds.size;
@@ -142,8 +144,9 @@
         lastX = viewX;
     }
     viewX = windowWidth;
-    CGFloat lastMaxX = windowWidth;
+    CGFloat lastMaxX = windowWidth-15.0;
     for (UIView *view in _rightViews) {
+        if (view.isHidden || view.alpha <= 0.0) continue;
         CGSize size = [view sizeThatFits:windowSize];
         if (CGSizeEqualToSize(size, CGSizeZero)) {
             size = view.bounds.size;
@@ -154,9 +157,16 @@
     }
     
     if (_centerView != nil) {
-        viewX = MAX(lastX, windowWidth-lastMaxX);
-        viewW = windowWidth-viewX*2.0;
-        _centerView.frame = (CGRect){viewX, minY, viewW, maxH};
+        CGFloat isInCenterX = MAX(lastX, windowWidth-lastMaxX);
+        CGFloat maxW = lastMaxX-lastX;
+        CGSize centerViewSize = [_centerView sizeThatFits:(CGSize){maxW, maxH}];
+        CGFloat centerViewW = MIN(maxW, ceil(centerViewSize.width));
+        CGFloat centerViewH = MIN(maxH, ceil(centerViewSize.height));
+        viewX = (windowWidth-centerViewW)*0.5;
+        if (viewX < isInCenterX) {
+            viewX = (maxW-centerViewW)*0.5+lastX;
+        }
+        _centerView.frame = (CGRect){viewX, (maxH-centerViewH)*0.5+minY, centerViewW, centerViewH};
     }
     
     viewX = 0.0;

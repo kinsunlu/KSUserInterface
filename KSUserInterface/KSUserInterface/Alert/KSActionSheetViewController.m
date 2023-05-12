@@ -11,8 +11,6 @@
 
 @property (nonatomic, weak) UIView *actionSheetView;
 @property (nonatomic, assign) CGFloat bottomMargin;
-@property (nonatomic, assign, getter=isFollowKeyboard) BOOL followKeyboard;
-@property (nonatomic, assign, getter=isKeyBoradShowed, readonly) BOOL keyBoradShowed;
 
 @end
 
@@ -25,7 +23,6 @@
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = UIColor.clearColor;
         _bottomMargin = 0.0;
-        _followKeyboard = NO;
         _keyBoradHeight = 0.0;
     }
     return self;
@@ -74,36 +71,14 @@
     [self setNeedsLayout];
 }
 
-- (BOOL)isKeyBoradShowed {
-    return _keyBoradHeight > 0.0;
-}
-
-- (void)setFollowKeyboard:(BOOL)followKeyboard {
-    if (_followKeyboard == followKeyboard) return;
-    _followKeyboard = followKeyboard;
-    if (followKeyboard) {
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(_keyboardWillChangeFrameNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    } else {
-        [NSNotificationCenter.defaultCenter removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
-    }
-}
-
-- (void)_keyboardWillChangeFrameNotification:(NSNotification *)notification {
-    NSDictionary *userInfo = notification.userInfo;
-    if (userInfo == nil) return;
-    CGRect toFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    _keyBoradHeight = toFrame.origin.y >= UIScreen.mainScreen.bounds.size.height ? 0.0 : toFrame.size.height;
+- (void)followKeyboardWithHeight:(CGFloat)height duration:(NSTimeInterval)duration {
+    _keyBoradHeight = height;
     __weak typeof(_actionSheetView) weakView = _actionSheetView;
     CGRect frame = weakView.frame;
     frame.origin.y = self.bounds.size.height-MAX(_keyBoradHeight, _bottomMargin)-frame.size.height;
     [UIView animateWithDuration:duration animations:^{
         weakView.frame = frame;
     }];
-}
-
-- (void)dealloc {
-    self.followKeyboard = NO;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -121,7 +96,6 @@
 
 @implementation KSActionSheetViewController {
     __weak _KSActionSheetContentView *_contentView;
-    BOOL _isAnimtioning;
 }
 @synthesize actionSheetView = _actionSheetView;
 @dynamic view;
@@ -130,7 +104,6 @@
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        _isAnimtioning = NO;
         _clickBackgroundCloseEnable = YES;
     }
     return self;
@@ -146,7 +119,6 @@
     _KSActionSheetContentView *contentView = _KSActionSheetContentView.alloc.init;
     contentView.hidden = YES;
     contentView.actionSheetView = self.actionSheetView;
-    contentView.followKeyboard = _followKeyboard;
     [view addSubview:contentView];
     _contentView = contentView;
     self.view = view;
@@ -181,12 +153,11 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    if (_followKeyboard && _contentView.isKeyBoradShowed) {
+    if (_followKeyboard && _keyBoradShowed) {
         [_actionSheetView endEditing:YES];
     }
     [super viewWillDisappear:animated];
     if (!animated) return;
-    _isAnimtioning = YES;
     CGSize windowSize = self.view.bounds.size;
     CGRect frame = _contentView.frame;
     frame.origin.y = 0.0;
@@ -198,9 +169,7 @@
         weakView.frame = frame;
     } completion:^(BOOL finished) {
         weakView.hidden = YES;
-        __strong typeof(weakSelf) self = weakSelf;
-        self->_isAnimtioning = NO;
-        [self.view setNeedsLayout];
+        [weakSelf.view setNeedsLayout];
     }];
 }
 
@@ -210,12 +179,11 @@
     if (@available(iOS 11.0, *)) {
         _contentView.bottomMargin = view.safeAreaInsets.bottom;
     }
-    if (_isAnimtioning) return;
     _contentView.frame = view.bounds;
+    [_contentView setNeedsLayout];
 }
 
 - (void)_showAnimation {
-    _isAnimtioning = YES;
     CGSize windowSize = self.view.bounds.size;
     CGRect frame = _contentView.frame;
     frame.origin.y = windowSize.height-([_actionSheetView sizeThatFits:windowSize].height+_contentView.bottomMargin);
@@ -227,21 +195,31 @@
     [UIView animateWithDuration:0.6 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.3 options:0 animations:^{
         weakView.frame = frame;
     } completion:^(BOOL finished) {
-        __strong typeof(weakSelf) self = weakSelf;
-        self->_isAnimtioning = NO;
-        [self.view setNeedsLayout];
+        [weakSelf.view setNeedsLayout];
     }];
 }
 
 - (void)setFollowKeyboard:(BOOL)followKeyboard {
     _followKeyboard = followKeyboard;
-    if (self.isViewLoaded) {
-        _contentView.followKeyboard = followKeyboard;
+    if (followKeyboard) {
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(_keyboardWillChangeFrameNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    } else {
+        [NSNotificationCenter.defaultCenter removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
     }
 }
 
-- (BOOL)isKeyBoradShowed {
-    return self.isViewLoaded ? _contentView.followKeyboard : NO;
+- (void)_keyboardWillChangeFrameNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    if (userInfo == nil) return;
+    CGRect toFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGFloat keyBoradHeight = toFrame.origin.y >= UIScreen.mainScreen.bounds.size.height ? 0.0 : toFrame.size.height;
+    _keyBoradShowed = keyBoradHeight > 0.0;
+    [self followKeyboardWithHeight:keyBoradHeight duration:duration];
+}
+
+- (void)followKeyboardWithHeight:(CGFloat)height duration:(NSTimeInterval)duration {
+    [_contentView followKeyboardWithHeight:height duration:duration];
 }
 
 - (void)setClickBackgroundCloseEnable:(BOOL)clickBackgroundCloseEnable {
@@ -255,7 +233,7 @@
 }
 
 - (void)didClickBackgroundView {
-    if (_contentView.isKeyBoradShowed) {
+    if (_keyBoradShowed) {
         [_actionSheetView endEditing:YES];
     } else {
         [self closeActionSheetViewController];
@@ -264,6 +242,10 @@
 
 - (void)closeActionSheetViewController {
     [self.navigationController ?: self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)dealloc {
+    self.followKeyboard = NO;
 }
 
 @end

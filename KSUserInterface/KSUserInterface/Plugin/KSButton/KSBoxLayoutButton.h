@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, getter=isRoundedCorners) BOOL roundedCorners;
 @property (nonatomic, weak) ContentView contentView;
 @property (nonatomic, assign) UIEdgeInsets contentInset;
+@property (nonatomic, assign, getter=isRelayoutSuperviewWhentateChanged) BOOL relayoutSuperviewWhentateChanged;
 
 @end
 

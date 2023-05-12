@@ -12,6 +12,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _contentInset = UIEdgeInsetsZero;
+        _relayoutSuperviewWhentateChanged = NO;
     }
     return self;
 }
@@ -44,22 +45,41 @@
         [self addSubview:contentView];
         [self setNeedsLayout];
     }
+    if (_relayoutSuperviewWhentateChanged) {
+        [self.superview setNeedsLayout];
+    }
 }
 
 - (void)setContentInset:(UIEdgeInsets)contentInset {
     if (UIEdgeInsetsEqualToEdgeInsets(_contentInset, contentInset)) return;
     _contentInset = contentInset;
     [self setNeedsLayout];
+    if (_relayoutSuperviewWhentateChanged) {
+        [self.superview setNeedsLayout];
+    }
 }
 
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     self.alpha = enabled ? 1.0 : 0.5;
+    if (_relayoutSuperviewWhentateChanged) {
+        [self.superview setNeedsLayout];
+    }
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
     [super setHighlighted:highlighted];
     self.alpha = highlighted ? 0.5 : 1.0;
+    if (_relayoutSuperviewWhentateChanged) {
+        [self.superview setNeedsLayout];
+    }
+}
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    if (_relayoutSuperviewWhentateChanged) {
+        [self.superview setNeedsLayout];
+    }
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {

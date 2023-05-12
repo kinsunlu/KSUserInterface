@@ -78,7 +78,11 @@
 - (void)didClickLoadingView:(KSLoadingView *)loadingView {}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    if (@available(iOS 13.0, *)) {
+        return UIStatusBarStyleDarkContent;
+    } else {
+        return UIStatusBarStyleDefault;
+    }
 }
 
 @end
@@ -88,7 +92,14 @@
 
 - (void)setTitle:(NSString *)title {
     [super setTitle:title];
-    self.view.navigationView.title = title;
+    if (self.isViewLoaded) {
+        self.view.navigationView.title = title;
+    }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.navigationView.title = self.title;
 }
 
 - (void)loadView {

@@ -40,7 +40,6 @@ const NSInteger _KSWebImageURLErrorCode = -999;
 
 @implementation KSImageView {
     NSString *_currentKey;
-    __weak NSTimer *_timer;
 }
 
 + (KSNetworking <NSData *> *)_ks__sharedNetworking__ {
@@ -113,31 +112,17 @@ const NSInteger _KSWebImageURLErrorCode = -999;
     return [self imageWithURLString:url.absoluteString];
 }
 
-- (void)setTailOfQueue:(BOOL)tailOfQueue {
-    if (_tailOfQueue == tailOfQueue) return;
-    _tailOfQueue = tailOfQueue;
-    if (tailOfQueue) {
-        __ks__task__ = _KSImageViewTask.alloc.init;
-        __weak typeof(self) weakSelf = self;
-        NSTimer *timer = [NSTimer.alloc initWithFireDate:NSDate.distantFuture interval:0.0 repeats:true block:^(NSTimer * timer) {
-            timer.fireDate = NSDate.distantFuture;
-            if (weakSelf == nil) return;
-            _KSImageViewTask *task = weakSelf._ks__task__;
-            [weakSelf _setImageURL:task.url key:task.key finished:task.finished];
-        }];
-        [NSRunLoop.mainRunLoop addTimer:timer forMode:NSDefaultRunLoopMode];
-        _timer = timer;
-    } else {
-        __ks__task__ = nil;
-        [_timer invalidate];
-        _timer = nil;
-    }
+- (void)_performImageTask {
+    _KSImageViewTask *task = __ks__task__;
+    if (task == nil) return;
+    __ks__task__ = nil;
+    [self _setImageURL:task.url key:task.key finished:task.finished];
 }
 
 - (void)setImageURL:(NSURL *)url placeholder:(UIImage *)placeholder finished:(KSImageViewCallback)finished {
     if (url == nil) {
         _currentKey = nil;
-        if (_tailOfQueue) _timer.fireDate = NSDate.distantFuture;
+        if (_deferredTask) __ks__task__ = nil;
         self.image = placeholder;
         return;
     }
@@ -147,7 +132,7 @@ const NSInteger _KSWebImageURLErrorCode = -999;
     UIImage *image = [class _imageWithKey:key path:&path];
     if (image != nil) {
         _currentKey = nil;
-        if (_tailOfQueue) _timer.fireDate = NSDate.distantFuture;
+        if (_deferredTask) __ks__task__ = nil;
         self.image = image;
         if (finished != nil) {
             finished(self, image, path, nil);
@@ -156,11 +141,19 @@ const NSInteger _KSWebImageURLErrorCode = -999;
     }
     self.image = placeholder;
     _currentKey = key;
-    if (_tailOfQueue) {
-        __ks__task__.key = key;
-        __ks__task__.url = url;
-        __ks__task__.finished = finished;
-        _timer.fireDate = NSDate.date;
+    if (_deferredTask) {
+        if (__ks__task__ == nil) {
+            _KSImageViewTask *task = _KSImageViewTask.alloc.init;
+            task.key = key;
+            task.url = url;
+            task.finished = finished;
+            __ks__task__ = task;
+            [self performSelector:@selector(_performImageTask) withObject:nil afterDelay:0.0 inModes:@[NSDefaultRunLoopMode]];
+        } else {
+            __ks__task__.key = key;
+            __ks__task__.url = url;
+            __ks__task__.finished = finished;
+        }
     } else {
         [self _setImageURL:url key:key finished:finished];
     }
@@ -210,6 +203,14 @@ const NSInteger _KSWebImageURLErrorCode = -999;
     });
 }
 
+- (void)setImage:(UIImage *)image {
+    if (_renderingMode == UIImageRenderingModeAlwaysTemplate) {
+        [super setImage:[image imageWithRenderingMode:_renderingMode]];
+    } else {
+        [super setImage:image];
+    }
+}
+
 + (UIImage *)_imageFromData:(NSData *)data {
     return [UIImage imageWithData:data];
 }
@@ -241,11 +242,6 @@ const NSInteger _KSWebImageURLErrorCode = -999;
 
 - (void)setImageURLString:(NSString *)urlString {
     [self setImageURLString:urlString placeholder:nil finished:nil];
-}
-
-- (void)dealloc {
-    [_timer invalidate];
-    _timer = nil;
 }
 
 @end

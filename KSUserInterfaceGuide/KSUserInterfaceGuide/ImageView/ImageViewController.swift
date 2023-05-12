@@ -172,7 +172,7 @@ extension ImageViewController {
             imageView.clipsToBounds = true
             /// 开启后只有手指离开了屏幕并且滑动停止了才会真正的发起网络请求加载图片资源
             /// 从而减少用户在快速滑动过程中的网络请求
-            imageView.isTailOfQueue = true
+            imageView.isDeferredTask = true
             return imageView
         }()
         

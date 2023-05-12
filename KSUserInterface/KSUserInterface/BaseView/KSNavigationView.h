@@ -33,16 +33,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// 默认 = KSNavigationViewStyleLight
 @property (nonatomic, assign) KSNavigationViewStyle style;
 
-- (void)setBackgroundColor:(UIColor *_Nullable)backgroundColor forStyle:(KSNavigationViewStyle)style;
+- (void)setBackgroundColor:(UIColor *_Nullable)backgroundColor forStyle:(KSNavigationViewStyle)style UI_APPEARANCE_SELECTOR;
 - (UIColor *_Nullable)backgroundColorForStyle:(KSNavigationViewStyle)style;
-- (void)setLineColor:(UIColor *_Nullable)lineColor forStyle:(KSNavigationViewStyle)style;
+- (void)setLineColor:(UIColor *_Nullable)lineColor forStyle:(KSNavigationViewStyle)style UI_APPEARANCE_SELECTOR;
 - (UIColor *_Nullable)lineColorForStyle:(KSNavigationViewStyle)style;
 
-@property (nonatomic, assign, getter=isHiddenLine) BOOL hiddenLine;
+@property (nonatomic, assign, getter=isHiddenLine) BOOL hiddenLine UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat statusBarHeight;
 @property (nonatomic, nullable) NSString *title;
 
-- (void)setTitleColor:(UIColor *_Nullable)titleColor forStyle:(KSNavigationViewStyle)style;
+- (void)setTitleColor:(UIColor *_Nullable)titleColor forStyle:(KSNavigationViewStyle)style UI_APPEARANCE_SELECTOR;
 - (UIColor *_Nullable)titleColorForStyle:(KSNavigationViewStyle)style;
 
 /// 默认=UILabel
@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak, readonly) UIControl *backButton;
 
-- (void)setBackButtonColor:(UIColor *_Nullable)backButtonColor forStyle:(KSNavigationViewStyle)style;
+- (void)setBackButtonColor:(UIColor *_Nullable)backButtonColor forStyle:(KSNavigationViewStyle)style UI_APPEARANCE_SELECTOR;
 - (UIColor *_Nullable)backButtonColorForStyle:(KSNavigationViewStyle)style;
 
 @end
