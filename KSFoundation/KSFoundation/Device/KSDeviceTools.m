@@ -6,6 +6,7 @@
 //  Copyright © 2020 Kinsun. All rights reserved.
 //
 
+#import "KSDeviceTools.h"
 #import <mach/mach.h>
 #import <sys/socket.h> // Per msqr
 #import <sys/sysctl.h>
@@ -27,23 +28,22 @@
 #import <objc/runtime.h>
 
 // {'0A', '1B', '2C', '3D', '4E', '5F', '6G', '7H', '8I', '9J', '10K', '11L', '12M', '13N', '14O', '15P', '16Q', '17R', '18S', '19T', '20U', '21V', '22W', '23X', '24Y', '25Z'};
-static const char _dn_i[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static const char _ks_i[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-#import "KSDeviceTools.h"
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 CTCarrier * _ks_carrier(void) {
     char c[23];
-    sprintf(c, "%c%c%celephony%cetwork%cnfo", _dn_i[2], _dn_i[19], _dn_i[19], _dn_i[13], _dn_i[8]);
+    sprintf(c, "%c%c%celephony%cetwork%cnfo", _ks_i[2], _ks_i[19], _ks_i[19], _ks_i[13], _ks_i[8]);
     CTTelephonyNetworkInfo *info = [[objc_getClass(c) alloc] init];
     if (@available(iOS 13.0, *)) {
         char k[22];
-        sprintf(k, "data%cervice%cdentifier", _dn_i[18], _dn_i[8]);
+        sprintf(k, "data%cervice%cdentifier", _ks_i[18], _ks_i[8]);
         char s[35];
-        sprintf(s, "service%cubscriber%cellular%croviders", _dn_i[18], _dn_i[2], _dn_i[15]);
+        sprintf(s, "service%cubscriber%cellular%croviders", _ks_i[18], _ks_i[2], _ks_i[15]);
         return [[info performSelector:sel_registerName(s)] objectForKey:[info performSelector:sel_registerName(k)]];
     } else {
         char s[27];
-        sprintf(s, "subscriber%cellular%crovider", _dn_i[2], _dn_i[15]);
+        sprintf(s, "subscriber%cellular%crovider", _ks_i[2], _ks_i[15]);
         return [info performSelector:sel_registerName(s)];
     }
 }
@@ -58,10 +58,10 @@ NSString * _ks_getIMSI(void) {
 void _ks_getMCC_MNC(NSString ** mcc, NSString ** mnc) {
     CTCarrier *carrier = _ks_carrier();
     char cc[18];
-    sprintf(cc, "mobile%country%code", _dn_i[2], _dn_i[2]);
+    sprintf(cc, "mobile%country%code", _ks_i[2], _ks_i[2]);
     *mcc = [carrier performSelector:sel_registerName(cc)];
     char nc[18];
-    sprintf(nc, "mobile%cetwork%code", _dn_i[13], _dn_i[2]);
+    sprintf(nc, "mobile%cetwork%code", _ks_i[13], _ks_i[2]);
     *mnc = [carrier performSelector:sel_registerName(nc)];
 }
 
@@ -93,7 +93,7 @@ NSString * _ks_getUUID(void) {
     NSString *uuid = [KSKeyChainTool valueForKey:_ks_kKeychainUUIDItemIdentifier forAccessGroup:bundleIdentifier];
     if (uuid == nil) {
         char nc[20];
-        sprintf(nc, "identifier%cor%cendor", _dn_i[5], _dn_i[21]);
+        sprintf(nc, "identifier%cor%cendor", _ks_i[5], _ks_i[21]);
         uuid = [[UIDevice.currentDevice performSelector:sel_registerName(nc)] UUIDString];
         [KSKeyChainTool setValue:uuid forKey:_ks_kKeychainUUIDItemIdentifier forAccessGroup:bundleIdentifier];
     }

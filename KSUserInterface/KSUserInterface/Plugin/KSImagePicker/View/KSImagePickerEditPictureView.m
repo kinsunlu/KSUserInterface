@@ -7,7 +7,6 @@
 //
 
 #import "KSImagePickerEditPictureView.h"
- 
 
 @interface _KSIPEditPictureMaskView : UIView
 
@@ -64,6 +63,8 @@
 
 @end
 
+#import "UIColor+Hex.h"
+
 @interface _KSIPEditPictureTrimView : UIVisualEffectView
 
 @end
@@ -85,7 +86,7 @@
         layer.masksToBounds = YES;
         
         UIView *contentView = self.contentView;
-        UIColor *whiteColor = UIColor.whiteColor;
+        UIColor *whiteColor = UIColor.ks_white;
         UIFont *font = [UIFont systemFontOfSize:18.f];
         NSDictionary <NSAttributedStringKey, UIFont *> *attributes = @{NSFontAttributeName: font};
         CGSize maxSize = (CGSize){MAXFLOAT, MAXFLOAT};
@@ -100,11 +101,12 @@
             NSNumber *width = [NSNumber numberWithDouble:size.width];
             [itemsWidthArray addObject:width];
             
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            KSTextButton *btn = KSTextButton.alloc.init;
             btn.tag = i;
-            [btn setTitle:string forState:UIControlStateNormal];
-            btn.titleLabel.font = font;
-            [btn setTitleColor:whiteColor forState:UIControlStateNormal];
+            btn.normalTitle = string;
+            UILabel *label = btn.contentView;
+            label.font = font;
+            label.textColor = whiteColor;
             [btn addTarget:_target action:_action forControlEvents:UIControlEventTouchUpInside];
             [contentView addSubview:btn];
             [allBtns addPointer:(__bridge void *)btn];
@@ -136,7 +138,7 @@
     for (NSUInteger i = 0; i < count; i++) {
         NSNumber *value = [_itemsWidthArray objectAtIndex:i];
         CGFloat viewW = value.doubleValue+margin;
-        UIButton *btn = [_allBtns pointerAtIndex:i];
+        KSTextButton *btn = [_allBtns pointerAtIndex:i];
         CGRect frame = (CGRect){viewX, viewY, viewW, viewH};
         btn.frame = frame;
         viewX = CGRectGetMaxX(frame);
@@ -161,7 +163,7 @@
         _target = target;
         _action = action;
         self.backgroundColor = UIColor.clearColor;
-        UIColor *whiteColor = UIColor.whiteColor;
+        UIColor *whiteColor = UIColor.ks_white;
         UIFont *font = [UIFont systemFontOfSize:18.f];
         NSDictionary <NSAttributedStringKey, UIFont *> *attributes = @{NSFontAttributeName: font};
         CGSize maxSize = (CGSize){MAXFLOAT, MAXFLOAT};
@@ -175,11 +177,12 @@
             NSNumber *width = [NSNumber numberWithDouble:size.width];
             [itemsWidthArray addObject:width];
             
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            KSTextButton *btn = KSTextButton.alloc.init;
             btn.tag = i;
-            [btn setTitle:title forState:UIControlStateNormal];
-            btn.titleLabel.font = font;
-            [btn setTitleColor:whiteColor forState:UIControlStateNormal];
+            btn.normalTitle = title;
+            UILabel *label = btn.contentView;
+            label.font = font;
+            label.textColor = whiteColor;
             [btn addTarget:_target action:_action forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btn];
             [buttonArray addPointer:(__bridge void *)btn];
@@ -211,7 +214,7 @@
     for (NSUInteger i = 0; i < count; i++) {
         NSNumber *value = [_itemsWidthArray objectAtIndex:i];
         CGFloat viewW = value.doubleValue+margin;
-        UIButton *btn = [_buttonArray pointerAtIndex:i];
+        KSTextButton *btn = [_buttonArray pointerAtIndex:i];
         CGRect frame = (CGRect){viewX, viewY, viewW, viewH};
         btn.frame = frame;
         viewX = CGRectGetMaxX(frame);
@@ -292,7 +295,7 @@
     _toolBar.frame = (CGRect){0.0, viewY, viewW, viewH};
 }
 
-- (void)_didClickToolBarButtons:(UIButton *)btn {
+- (void)_didClickToolBarButtons:(KSTextButton *)btn {
     switch (btn.tag) {
         case 0: {
             __weak UIView *contentView = _contentView;
@@ -349,7 +352,7 @@
     }];
 }
 
-- (void)_didClickTrimViewButtons:(UIButton *)btn {
+- (void)_didClickTrimViewButtons:(KSTextButton *)btn {
     CGFloat tx = 0.f, ty = 0.f;
     switch (btn.tag) {
         case 0: tx=-1.f; break;
@@ -393,12 +396,14 @@
     }
 }
 
-- (void)snapshotWithOperation:(void(^)(void))operation {
-    if (operation != nil) {
-        _maskView.hidden = YES;
-        operation ();
-        _maskView.hidden = NO;
-    }
+- (UIImage *)snapshot {
+    _maskView.hidden = YES;
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    _maskView.hidden = NO;
+    return img;
 }
 
 #pragma mark - UIGestureRecognizer的代理方法

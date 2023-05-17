@@ -50,19 +50,15 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)_didClickDoneButton:(UIButton *)btn {
+- (void)_didClickDoneButton:(KSTextButton *)btn {
     if ([_delegate respondsToSelector:@selector(imagePickerEditPicture:didFinishSelectedImage:assetModel:)]) {
         KSImagePickerEditPictureView *view = self.view;
-        __block UIImage *snapshotImg = nil;
-        [view snapshotWithOperation:^{
-            snapshotImg = [KSImagePickerEditPictureController renderingImageInView:view];
-        }];
         CGRect contentRect = view.contentRect;
         CGSize size = contentRect.size;
         CGPoint origin = contentRect.origin;
         CGFloat scale = UIScreen.mainScreen.scale;
         CGRect rect = (CGRect){origin.x*scale, origin.y*scale, size.width*scale, size.height*scale};
-        UIImage *newimage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(snapshotImg.CGImage, rect)];
+        UIImage *newimage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(view.snapshot.CGImage, rect)];
         [_delegate imagePickerEditPicture:self didFinishSelectedImage:newimage assetModel:_model];
         
         NSArray<UIViewController *> *viewControllers = self.navigationController.viewControllers;
@@ -74,14 +70,6 @@
             [self.navigationController popToViewController:controller animated:YES];
         }
     }
-}
-
-+ (UIImage *)renderingImageInView:(UIView *)view {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return img;
 }
 
 @end

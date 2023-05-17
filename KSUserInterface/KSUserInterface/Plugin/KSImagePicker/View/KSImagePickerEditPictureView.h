@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readonly) UIImageView *imageView;
 @property (nonatomic, readonly) CGRect contentRect;
 
-- (void)snapshotWithOperation:(void(^)(void))operation;
+@property (nonatomic, readonly, nullable) UIImage *snapshot;
 
 @end
 

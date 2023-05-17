@@ -37,7 +37,7 @@
         [self addSubview:collectionView];
         _collectionView = collectionView;
         
-        UIColor *whiteColor = UIColor.whiteColor;
+        UIColor *whiteColor = UIColor.ks_white;
         
         UIView *toolBarSafeAreaView = [[UIView alloc] init];
         toolBarSafeAreaView.backgroundColor = whiteColor;
@@ -63,7 +63,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    CGSize windowSize = self.bounds.size;
+    CGRect bounds = self.bounds;
+    CGSize windowSize = bounds.size;
     CGFloat windowWidth = windowSize.width;
     CGFloat windowHeight = windowSize.height;
     UIEdgeInsets safeArea = UIEdgeInsetsZero;
@@ -89,13 +90,13 @@
     layout.minimumInteritemSpacing = margin;
     layout.sectionInset = UIEdgeInsetsZero;
     
-    _collectionView.frame = self.bounds;
+    _collectionView.frame = bounds;
     UIEdgeInsets inset = (UIEdgeInsets){CGRectGetMaxY(self.navigationView.frame), 0.0, _toolBarSafeAreaView.frame.size.height, 0.0};
     _collectionView.contentInset = inset;
     _collectionView.scrollIndicatorInsets = inset;
     
-    _albumTableView.frame = self.bounds;
-    CGRect frame = _albumTableView.frame;
+    _albumTableView.frame = bounds;
+    CGRect frame = bounds;
     frame.origin.y = -windowHeight;
     _albumTableView.frame = frame;
     _albumTableView.contentInset = inset;
@@ -132,11 +133,11 @@
     }];
 }
 
-- (UIButton *)previewButton {
+- (KSTextButton *)previewButton {
     return _toolBar.previewButton;
 }
 
-- (UIButton *)doneButton {
+- (KSGradientButton *)doneButton {
     return _toolBar.doneButton;
 }
 

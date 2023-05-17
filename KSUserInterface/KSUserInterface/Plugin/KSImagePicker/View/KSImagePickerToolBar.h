@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KSBoxLayoutButton.h"
+#import "KSGradientButton.h"
 
 typedef NS_ENUM(NSInteger, KSImagePickerToolBarStyle) {
     KSImagePickerToolBarStylePreview = 0,
@@ -25,8 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  KSImagePickerToolBarStylePreview only
  */
-@property (nonatomic, weak, readonly) UIButton *previewButton;
-@property (nonatomic, weak, readonly) UIButton *doneButton;
+@property (nonatomic, weak, readonly) KSTextButton *previewButton;
+@property (nonatomic, weak, readonly) KSGradientButton *doneButton;
 
 - (instancetype)initWithStyle:(KSImagePickerToolBarStyle)style;
 

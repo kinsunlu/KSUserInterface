@@ -7,12 +7,13 @@
 //
 
 #import "KSNavigationView.h"
+#import "KSBoxLayoutButton.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KSImagePickerEditPictureNavigationView : KSSecondaryNavigationView
 
-@property (nonatomic, weak, readonly) UIButton *doneButton;
+@property (nonatomic, weak, readonly) KSTextButton *doneButton;
 
 @end
 

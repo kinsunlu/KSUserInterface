@@ -48,7 +48,7 @@ static NSString * const k_iden2 = @"KSImagePickerViewerVideoCell";
         [selectIndicator addTarget:self action:@selector(didClickSelectIndicator:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    UIButton *doneButton = view.doneButton;
+    KSGradientButton *doneButton = view.doneButton;
     doneButton.enabled = YES;
     [doneButton addTarget:self action:@selector(didClickButton) forControlEvents:UIControlEventTouchUpInside];
     UICollectionView *collectionView = view.collectionView;

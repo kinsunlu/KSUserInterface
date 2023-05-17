@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
 /// path = [path stringByAppendingPathComponent:KSArchiveToolsFilePath];
 FOUNDATION_EXTERN NSString * const KSArchiveToolsFilePath NS_SWIFT_NAME(KSArchiveTools.filePath);
+/// 数据将要执行自动保存的时候会先发送此通知
 FOUNDATION_EXTERN NSNotificationName const KSArchiveToolsWillAutoSynchronizeNotification NS_SWIFT_NAME(KSArchiveTools.willAutoSynchronizeNotification);
 
 @interface KSArchiveTools : NSObject

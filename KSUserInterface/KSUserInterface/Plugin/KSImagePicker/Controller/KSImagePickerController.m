@@ -78,7 +78,7 @@
             NSArray <PHFetchResult<PHAssetCollection *> *> *array = @[assetCollections, regularAssetCollections];
             [weakSelf setAssetData:array];
         });
-    } cancelHandler:^(UIAlertAction * _Nonnull action) {
+    } cancelHandler:^(UIAlertAction *action) {
         [weakSelf dismissViewController];
     }];
 }
@@ -315,8 +315,7 @@ static NSString * const k_iden3 = @"KSImagePickerCameraCell";
     if (itemModel.isCameraCell) cell = self.cameraCell;
     else {
         PHAssetMediaType mediaType = itemModel.asset.mediaType;
-        BOOL isPictureCell = mediaType == PHAssetMediaTypeImage;
-        NSString *iden = isPictureCell ? k_iden1 : k_iden2;
+        NSString *iden = mediaType == PHAssetMediaTypeImage ? k_iden1 : k_iden2;
         KSImagePickerItemCell *k_cell = [collectionView dequeueReusableCellWithReuseIdentifier:iden forIndexPath:indexPath];
         if (k_cell.didSelectedItem == nil) {
             __weak typeof(self) weakSelf = self;

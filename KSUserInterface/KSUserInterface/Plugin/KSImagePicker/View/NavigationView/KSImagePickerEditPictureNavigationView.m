@@ -7,16 +7,17 @@
 //
 
 #import "KSImagePickerEditPictureNavigationView.h"
+#import "UIColor+Hex.h"
 
 @implementation KSImagePickerEditPictureNavigationView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        KSTextButton *doneButton = KSTextButton.alloc.init;
         doneButton.frame = (CGRect){CGPointZero, 60.0, 0.0};
-        doneButton.titleLabel.font = [UIFont systemFontOfSize:16.f];
-        [doneButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-        [doneButton setTitle:@"完成" forState:UIControlStateNormal];
+        doneButton.contentInset = (UIEdgeInsets){14.0, 0.0, 14.0, 16.0};
+        doneButton.contentView.textColor = UIColor.ks_white;
+        doneButton.normalTitle = @"完成";
         [self addRightView:doneButton];
         _doneButton = doneButton;
     }

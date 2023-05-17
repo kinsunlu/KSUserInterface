@@ -82,7 +82,7 @@
     self.backgroundColor = [self backgroundColorForStyle:style];
     _lineLayer.backgroundColor = [self lineColorForStyle:style].CGColor;
     if (_centerView == nil) return;
-    if ([_centerView respondsToSelector:@selector(setTitle:)]) {
+    if ([_centerView respondsToSelector:@selector(setTitleColor:)]) {
         _centerView.titleColor = [self titleColorForStyle:style];
     }
     if ([_centerView respondsToSelector:@selector(setStyle:)]) {

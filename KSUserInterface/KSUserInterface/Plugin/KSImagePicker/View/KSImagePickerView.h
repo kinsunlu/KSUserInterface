@@ -8,6 +8,8 @@
 
 #import "KSBaseView.h"
 #import "KSImagePickerNavigationView.h"
+#import "KSBoxLayoutButton.h"
+#import "KSGradientButton.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,8 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readonly) UICollectionView *collectionView;
 @property (nonatomic, weak, readonly) UITableView *albumTableView;
 
-@property (nonatomic, readonly) UIButton *previewButton;
-@property (nonatomic, readonly) UIButton *doneButton;
+@property (nonatomic, readonly) KSTextButton *previewButton;
+@property (nonatomic, readonly) KSGradientButton *doneButton;
 
 @property (nonatomic, assign, getter=isShowAlbumList, readonly) BOOL showAlbumList;
 

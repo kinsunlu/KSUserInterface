@@ -69,6 +69,7 @@ Pod::Spec.new do |spec|
   spec.subspec 'ImagePicker' do |ip|
     ip.source_files = 'KSUserInterface/Plugin/KSImagePicker/**/*.{h,m}'
     ip.frameworks = "CoreServices"
+    ip.dependency 'KSUserInterface/Button'
     ip.dependency 'KSUserInterface/MediaViewer'
   end
   

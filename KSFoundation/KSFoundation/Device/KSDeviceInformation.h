@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 当异步获取的值发生变化时会发送此通知，并在通知的UserInfo中使用KSDeviceInformationUpdateKey来确定是哪个值发生了变化，eg[KSDeviceInformationUpdate: @(KSDeviceInformationUpdate)]。
 FOUNDATION_EXTERN NSNotificationName const KSDeviceInformationNeedUpdateNotification NS_SWIFT_NAME(KSDeviceInformation.NeedUpdateNotification);
 
 FOUNDATION_EXTERN NSString * const KSDeviceInformationUpdateKey NS_SWIFT_NAME(KSDeviceInformation.UpdateKey);

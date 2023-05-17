@@ -7,7 +7,7 @@
 //
 
 #import "KSImagePickerToolBar.h"
-#import "KSGradientButton.h"
+#import "UIColor+Hex.h"
 
 @implementation KSImagePickerToolBar {
     __weak UIView *_lineView;
@@ -32,12 +32,12 @@
         _lineView = lineView;
         
         if (_style == KSImagePickerToolBarStylePreview) {
-            UIButton *previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            KSTextButton *previewButton = KSTextButton.alloc.init;
             previewButton.enabled = NO;
-            previewButton.titleLabel.font = [UIFont systemFontOfSize:16.f];
-            [previewButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-            [previewButton setTitleColor:[UIColor.blackColor colorWithAlphaComponent:0.5f] forState:UIControlStateDisabled];
-            [previewButton setTitle:@"预览" forState:UIControlStateNormal];
+            UILabel *label = previewButton.contentView;
+            label.font = [UIFont systemFontOfSize:16.f];
+            label.textColor = UIColor.ks_black;
+            previewButton.normalTitle = @"预览";
             [self addSubview:previewButton];
             _previewButton = previewButton;
         } else {

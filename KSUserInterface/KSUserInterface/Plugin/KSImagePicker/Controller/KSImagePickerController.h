@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, KSImagePickerEditPictureStyle) {
 } NS_SWIFT_NAME(KSImagePickerController.EditPictureStyle);
 
 @protocol KSImagePickerControllerDelegate;
-@interface KSImagePickerController : KSSecondaryViewController
+@interface KSImagePickerController: KSSecondaryViewController
 
 @property (nonatomic, assign, readonly) KSImagePickerEditPictureStyle editPictureStyle;
 @property (nonatomic, assign, readonly) KSImagePickerMediaType mediaType;

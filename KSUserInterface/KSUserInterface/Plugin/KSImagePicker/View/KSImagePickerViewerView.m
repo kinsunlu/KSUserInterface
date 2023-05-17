@@ -78,7 +78,7 @@
     return _bottomBar.pageNumberLabel.text;
 }
 
-- (UIButton *)doneButton {
+- (KSGradientButton *)doneButton {
     return _bottomBar.doneButton;
 }
 
