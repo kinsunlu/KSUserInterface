@@ -11,11 +11,12 @@
 
 @implementation KSTabBarItem {
     @public __weak UILabel *_badgeLabel;
+    @public __weak UIView *_contentView;
 }
+@synthesize contentView = _contentView;
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame contentView:(UIView *)contentView {
     if (self = [super initWithFrame:frame]) {
-        self.clipsToBounds = NO;
         UILabel *badgeLabel = [[UILabel alloc]init];
         badgeLabel.font = [UIFont systemFontOfSize:10.f];
         badgeLabel.textColor = UIColor.ks_white;
@@ -25,34 +26,46 @@
         badgeLabel.hidden = YES;
         [self addSubview:badgeLabel];
         _badgeLabel = badgeLabel;
+        
+        [self addSubview:contentView];
+        _contentView = contentView;
+        
+        _contentInset = (UIEdgeInsets){7.0, 7.0, 4.0, 7.0};
     }
     return self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (!_badgeLabel.hidden) {
-        CGSize windowSize = self.bounds.size;
-        CGFloat windowWidth = windowSize.width;
-        CGFloat viewX = 0.0;
-        CGFloat viewY = 0.0;
-        CGFloat viewW = 0.0;
-        CGFloat viewH = 0.0;
-        if (_showPointTip) {
-            viewW = viewH = 8.0;
-            viewX = ceil(windowWidth/3.0*2.0-3.0);
-        } else {
-            CGFloat magin = 3.0;
-            CGSize size = [_badgeLabel sizeThatFits:windowSize];
-            viewW = size.width+magin*2.0;
-            viewH = size.height+magin;
-            viewW = MAX(viewW, viewH);
-            viewX = windowWidth*0.5+3.0;
-            viewY = -5.5;
-        }
-        _badgeLabel.frame = (CGRect){viewX, viewY, viewW, viewH};
-        _badgeLabel.layer.cornerRadius = viewH*0.5;
+    CGSize windowSize = self.bounds.size;
+    CGFloat windowWidth = windowSize.width;
+    UIEdgeInsets inset = self.contentInset;
+    CGFloat x = inset.left;
+    CGFloat y = inset.top;
+    CGFloat r = inset.right;
+    _contentView.frame = (CGRect){x, y, windowWidth-x-r, windowSize.height-y-inset.bottom};
+    
+    if (_badgeLabel.hidden) return;
+    CGFloat viewW;
+    CGFloat viewH;
+    CGFloat viewX;
+    if (_showPointTip) {
+        viewW = viewH = 8.0;
+        viewX = ceil(windowWidth-viewW-r);
+    } else {
+        CGSize size = [_badgeLabel sizeThatFits:windowSize];
+        viewH = size.height+3.0;
+        viewW = MAX(size.width+6.0, viewH);
+        viewX = MIN(windowWidth-r-viewW*0.5, windowWidth-viewW);
     }
+    _badgeLabel.frame = (CGRect){viewX, y, viewW, viewH};
+    _badgeLabel.layer.cornerRadius = viewH*0.5;
+}
+
+- (void)setContentInset:(UIEdgeInsets)contentInset {
+    if (UIEdgeInsetsEqualToEdgeInsets(_contentInset, contentInset)) return;
+    _contentInset = contentInset;
+    [self setNeedsLayout];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -87,65 +100,55 @@
 @implementation KSTabBarLabelItem
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        _selectedFont = [UIFont systemFontOfSize:19.f];
-        _normalFont = [UIFont systemFontOfSize:17.f];
+    UILabel *titleLabel = UILabel.alloc.init;
+    titleLabel.adjustsFontSizeToFitWidth = YES;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    if (self = [super initWithFrame:frame contentView:titleLabel]) {
+        _normalFont = [UIFont systemFontOfSize:17.0];
         _selectedTitleColor = UIColor.ks_black;
         _normalTitleColor = UIColor.ks_gray;
-        
-        UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.adjustsFontSizeToFitWidth = YES;
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.backgroundColor = [UIColor clearColor];
-        [self insertSubview:titleLabel belowSubview:_badgeLabel];
-        _titleLabel = titleLabel;
-        
         self.selected = NO;
     }
     return self;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    _titleLabel.frame = self.bounds;
-}
-
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
+    UILabel *contentView = self.contentView;
     if (selected) {
-        _titleLabel.textColor = _selectedTitleColor;
-        _titleLabel.font = _selectedFont;
+        contentView.textColor = _selectedTitleColor ?: _normalTitleColor;
+        contentView.font = _selectedFont ?: _normalFont;
     } else {
-        _titleLabel.textColor = _normalTitleColor;
-        _titleLabel.font = _normalFont;
+        contentView.textColor = _normalTitleColor;
+        contentView.font = _normalFont;
     }
 }
 
 - (void)setSelectedTitleColor:(UIColor *)selectedTitleColor {
-    _selectedTitleColor = selectedTitleColor;
+    _selectedTitleColor = selectedTitleColor ?: _normalTitleColor;
     if (self.selected) {
-        _titleLabel.textColor = selectedTitleColor;
+        self.contentView.textColor = selectedTitleColor;
     }
 }
 
 - (void)setNormalTitleColor:(UIColor *)normalTitleColor {
     _normalTitleColor = normalTitleColor;
     if (!self.selected) {
-        _titleLabel.textColor = normalTitleColor;
+        self.contentView.textColor = normalTitleColor;
     }
 }
 
 - (void)setSelectedFont:(UIFont *)selectedFont {
-    _selectedFont = selectedFont;
+    _selectedFont = selectedFont ?: _normalFont;
     if (self.selected) {
-        _titleLabel.font = selectedFont;
+        self.contentView.font = selectedFont;
     }
 }
 
 - (void)setNormalFont:(UIFont *)normalFont {
     _normalFont = normalFont;
     if (!self.selected) {
-        _titleLabel.font = normalFont;
+        self.contentView.font = normalFont;
     }
 }
 
@@ -154,55 +157,87 @@
 @implementation KSTabBarImageItem
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        UIImageView *icon = [[UIImageView alloc]init];
-        icon.contentMode = UIViewContentModeScaleAspectFit;
-        
-        CALayer *layer = icon.layer;
-        layer.masksToBounds = YES;
-        layer.borderColor = UIColor.ks_gray.CGColor;
-        [self insertSubview:icon belowSubview:_badgeLabel];
-        _icon = icon;
-    }
-    return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    UIImageView *icon = _icon;
-    CGSize windowSize = self.bounds.size;
-    CGFloat windowWidth = windowSize.width;
-    CGFloat windowHeight = windowSize.height;
-    
-    CGFloat viewX = 0.0;
-    CGFloat viewY = 4.0;
-    CGFloat viewW = windowWidth;
-    CGFloat viewH = windowHeight-viewY*2.0;
-    icon.frame = (CGRect){viewX, viewY, viewW, viewH};
+    UIImageView *icon = UIImageView.alloc.init;
+    icon.contentMode = UIViewContentModeScaleAspectFit;
+    return [super initWithFrame:frame contentView:icon];
 }
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    _icon.image = selected ? _selectedImage : _normalImage;
+    self.contentView.image = selected ? (_selectedImage ?: _normalImage) : _normalImage;
 }
 
 - (void)setSelectedImage:(UIImage *)selectedImage {
-    _selectedImage = selectedImage;
+    _selectedImage = selectedImage ?: _normalImage;
     if (self.isSelected) {
-        _icon.image = selectedImage;
+        self.contentView.image = selectedImage;
     }
 }
 
 - (void)setNormalImage:(UIImage *)normalImage {
     _normalImage = normalImage;
     if (!self.isSelected) {
-        _icon.image = normalImage;
+        self.contentView.image = normalImage;
     }
 }
 
 - (void)setTintColor:(UIColor *)tintColor {
     [super setTintColor:tintColor];
-    _icon.tintColor = tintColor;
+    self.contentView.tintColor = tintColor;
+}
+
+@end
+
+@interface _KSTabBarSystemContentView : UIView
+
+@property (nonatomic, weak, readonly) UIImageView *imageView;
+@property (nonatomic, weak, readonly) UILabel *titleLabel;
+@property (nonatomic, assign) CGFloat margin;
+
+@end
+
+@implementation _KSTabBarSystemContentView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        _margin = 6.0;
+        
+        UIImageView *imageView = UIImageView.alloc.init;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self addSubview:imageView];
+        _imageView = imageView;
+        
+        UILabel *titleLabel = UILabel.alloc.init;
+        titleLabel.adjustsFontSizeToFitWidth = YES;
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:titleLabel];
+        _titleLabel = titleLabel;
+        
+        self.backgroundColor = UIColor.clearColor;
+        self.userInteractionEnabled = NO;
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    CGSize windowSize = self.bounds.size;
+    CGFloat windowWidth = windowSize.width;
+    CGFloat labelH = ceil([_titleLabel sizeThatFits:windowSize].height);
+    _titleLabel.frame = (CGRect){0.0, windowSize.height-labelH, windowWidth, labelH};
+    _imageView.frame = (CGRect){0.0, 0.0, windowWidth, CGRectGetMinY(_titleLabel.frame)-_margin};
+}
+
+- (void)setMargin:(CGFloat)margin {
+    if (_margin == margin) return;
+    _margin = margin;
+    [self setNeedsLayout];
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+    [super setTintColor:tintColor];
+    _imageView.tintColor = tintColor;
+    _titleLabel.tintColor = tintColor;
 }
 
 @end
@@ -210,63 +245,91 @@
 @implementation KSTabBarSystemItem
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
+    if (self = [super initWithFrame:frame contentView:_KSTabBarSystemContentView.alloc.init]) {
+        _normalFont = [UIFont systemFontOfSize:10.0];
         _selectedTitleColor = UIColor.ks_main;
         _normalTitleColor = UIColor.ks_lightGray1;
-        self.icon.contentMode = UIViewContentModeCenter;
-        
-        UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.font = [UIFont systemFontOfSize:10.0];
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.backgroundColor = [UIColor clearColor];
-        titleLabel.textColor = _normalTitleColor;
-        [self addSubview:titleLabel];
-        _titleLabel = titleLabel;
+        self.selected = NO;
     }
     return self;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    CGSize windowSize = self.bounds.size;
-    CGFloat windowWidth = windowSize.width;
-    CGFloat windowHeight = windowSize.height;
-    
-    CGFloat viewX = 0.0;
-    CGFloat viewY = 0.0;
-    CGFloat viewW = 0.0;
-    CGFloat viewH = 0.0;
-    
-    viewW = viewH = windowHeight*0.65;
-    viewX = (windowWidth-viewW)*0.5;
-    UIImageView *icon = self.icon;
-    icon.frame = (CGRect){viewX, viewY, viewW, viewH};
-    
-    viewX = 7.0;
-    viewY = CGRectGetMaxY(icon.frame);
-    viewW = windowWidth-viewX*2.0;
-    viewH = windowHeight-viewY;
-    _titleLabel.frame = (CGRect){viewX, viewY, viewW, viewH};;
+- (void)setMargin:(CGFloat)margin {
+    ((_KSTabBarSystemContentView*)_contentView).margin = margin;
 }
 
+- (CGFloat)margin {
+    return ((_KSTabBarSystemContentView*)_contentView).margin;
+}
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    _titleLabel.textColor = selected ? _selectedTitleColor : _normalTitleColor;
+    _KSTabBarSystemContentView *contentView = (_KSTabBarSystemContentView*)_contentView;
+    UILabel *titleLabel = contentView.titleLabel;
+    if (selected) {
+        contentView.imageView.image = _selectedImage ?: _normalImage;
+        titleLabel.textColor = _selectedTitleColor ?: _normalTitleColor;
+        titleLabel.font = _selectedFont ?: _normalFont;
+    } else {
+        contentView.imageView.image = _normalImage;
+        titleLabel.textColor = _normalTitleColor;
+        titleLabel.font = _normalFont;
+    }
 }
 
 - (void)setSelectedTitleColor:(UIColor *)selectedTitleColor {
-    _selectedTitleColor = selectedTitleColor;
-    if (self.isSelected) {
-        _titleLabel.textColor = selectedTitleColor;
+    _selectedTitleColor = selectedTitleColor ?: _normalTitleColor;
+    if (self.selected) {
+        ((_KSTabBarSystemContentView*)_contentView).titleLabel.textColor = selectedTitleColor;
     }
 }
 
 - (void)setNormalTitleColor:(UIColor *)normalTitleColor {
     _normalTitleColor = normalTitleColor;
-    if (!self.isSelected) {
-        _titleLabel.textColor = normalTitleColor;
+    if (!self.selected) {
+        ((_KSTabBarSystemContentView*)_contentView).titleLabel.textColor = normalTitleColor;
     }
+}
+
+- (void)setSelectedFont:(UIFont *)selectedFont {
+    _selectedFont = selectedFont ?: _normalFont;
+    if (self.selected) {
+        ((_KSTabBarSystemContentView*)_contentView).titleLabel.font = selectedFont;
+    }
+}
+
+- (void)setNormalFont:(UIFont *)normalFont {
+    _normalFont = normalFont;
+    if (!self.selected) {
+        ((_KSTabBarSystemContentView*)_contentView).titleLabel.font = normalFont;
+    }
+}
+
+- (void)setSelectedImage:(UIImage *)selectedImage {
+    _selectedImage = selectedImage ?: _normalImage;
+    if (self.isSelected) {
+        ((_KSTabBarSystemContentView*)_contentView).imageView.image = selectedImage;
+    }
+}
+
+- (void)setNormalImage:(UIImage *)normalImage {
+    _normalImage = normalImage;
+    if (!self.isSelected) {
+        ((_KSTabBarSystemContentView*)_contentView).imageView.image = normalImage;
+    }
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+    [super setTintColor:tintColor];
+    _contentView.tintColor = tintColor;
+}
+
+- (UIImageView *)imageView {
+    return ((_KSTabBarSystemContentView*)_contentView).imageView;
+}
+
+- (UILabel *)titleLabel {
+    return ((_KSTabBarSystemContentView*)_contentView).titleLabel;
 }
 
 @end

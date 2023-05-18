@@ -42,13 +42,10 @@
     _lineLayer.frame = (CGRect){viewX, viewY, viewW, viewH};
     
     viewW = ceil(windowWidth/_itemArray.count);
+    viewH = windowHeight;
     for (NSInteger i = 0; i < _itemArray.count; i++) {
         viewX = viewW*i;
-        KSTabBarItem *item = [_itemArray objectAtIndex:i];
-        BOOL isTitleItem = [item isKindOfClass:KSTabBarSystemItem.class];
-        viewY = isTitleItem ? 7.f : 0.f;
-        viewH = windowHeight-viewY;
-        item.frame = (CGRect){viewX, viewY, viewW, viewH};
+        [_itemArray objectAtIndex:i].frame = (CGRect){viewX, viewY, viewW, viewH};
     }
 }
 
